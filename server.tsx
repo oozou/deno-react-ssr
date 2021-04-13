@@ -3,7 +3,12 @@ import React from "https://esm.sh/react?dts";
 import { renderToString } from "https://esm.sh/react-dom/server?dts";
 
 // Oak imports
-import { Application, Router, send } from "https://deno.land/x/oak/mod.ts";
+import {
+  Application,
+  Router,
+  send,
+  RouterContext,
+} from "https://deno.land/x/oak/mod.ts";
 
 // Internal imports
 import App from "./app.tsx";
@@ -44,7 +49,6 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 app.use(async (context) => {
-  console.log(context.request.url.pathname);
   await send(context, context.request.url.pathname, {
     root: `${Deno.cwd()}`,
   });
@@ -53,7 +57,7 @@ app.use(async (context) => {
 console.log("server is running on http://localhost:8000/");
 await app.listen({ port: 8000 });
 
-function handlePage(ctx: any) {
+function handlePage(ctx: RouterContext) {
   try {
     const body = renderToString(<App todos={Array.from(todos.values())} />);
     ctx.response.body = `<!DOCTYPE html>
@@ -61,9 +65,12 @@ function handlePage(ctx: any) {
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA/4QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERERERERERERAAAAAAAAERAQAAAAAAEBEAEAAAAAEAEQABAAAAEAARAAAQAAEAABEAAAEAEAAAEQAAABEAAAARAAAAEQAAABEAAAEAEAAAEQAAEAABAAARAAEAAAAQABEAEAAAAAEAEQEAAAAAABAREAAAAAAAAREREREREREREAAAAAP/wAAF/6AABv9gAAd+4AAHveAAB9vgAAfn4AAH5+AAB9vgAAe94AAHfuAABv9gAAX/oAAD/8AAAAAAAA"
+      rel="icon" type="image/x-icon" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
       rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
-      crossorigin="anonymous">
+      crossorigin="anonymous" />
     <title>Todo App</title>
     <script>
       window.__INITIAL_STATE__ = {"todos": ${JSON.stringify(

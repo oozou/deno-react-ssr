@@ -1,4 +1,5 @@
 export type Todo = { id: number; task: string };
+export type TodoItems = { todos: Todo[] };
 export let todos: Map<number, Todo> = new Map();
 
 export function init() {

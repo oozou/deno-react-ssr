@@ -1,10 +1,6 @@
 import React from "https://esm.sh/react?dts";
 
-import { Todo } from "./todos.ts";
-
-type TodoItems = {
-  todos: Todo[];
-};
+import { Todo, TodoItems } from "./todos.ts";
 
 function App({ todos = [] }: TodoItems) {
   return (
@@ -25,7 +21,7 @@ function ListTodos({ todos = [] }: TodoItems) {
   return (
     <>
       <ul className="list-group">
-        {todos.map((todo: any, index: number) => {
+        {todos.map((todo: Todo, index: number) => {
           const deleted = deletedIdxs.indexOf(index) !== -1;
           return (
             <li
