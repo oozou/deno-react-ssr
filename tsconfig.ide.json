@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.server.json",
+  "compilerOptions": {
+    "lib": ["DOM", "ES2017", "deno.window"],
+  }
+}

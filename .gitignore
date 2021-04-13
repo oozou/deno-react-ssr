@@ -1,0 +1,6 @@
+# Ignore transpiled js and gz files
+*.js
+*.gz
+
+# Zone identifier files
+*png:Zone.Identifier
