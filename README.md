@@ -36,7 +36,7 @@ curl --header "Content-Type: application/json" --request POST --data '{"task":"C
 
 ## TODO
 
-[ ] Clean code, many bad practices
+- [ ] Clean code, many bad practices
 
 ## Bugs
 
